@@ -8,5 +8,21 @@ import java.io.Serializable;
  */
 public class RedisResp implements Serializable {
 
+    private RedisTokenType type;
+
+    private Object o;
+
+    private static final String OK = "OK";
+
+
+    public enum RedisTokenType {
+        INTEGER,
+        SIMPLE_STRING,
+        STRING,
+        ARRAY,
+        ERROR,
+        UNKNOWN
+    }
+
 
 }

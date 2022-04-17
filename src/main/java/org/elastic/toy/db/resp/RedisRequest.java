@@ -43,4 +43,13 @@ public class RedisRequest implements Serializable {
     public void setRedisCommandEnums(RedisCommandEnums redisCommandEnums) {
         this.redisCommandEnums = redisCommandEnums;
     }
+
+    @Override
+    public String toString() {
+        return "RedisRequest{" +
+                "command='" + command + '\'' +
+                ", params=" + params +
+                ", redisCommandEnums=" + redisCommandEnums +
+                '}';
+    }
 }
