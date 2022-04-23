@@ -2,5 +2,6 @@
 
 ##Architecture diagram
 
-![](doc\Architecture diagram v1.0.png)
+<img src="doc/Architecture diagram v1.0.png" width="1600"/>
+
 
