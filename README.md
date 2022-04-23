@@ -2,6 +2,6 @@
 
 ##Architecture diagram
 
-<img src="doc/Architecture diagram v1.0.png" width="1600"/>
+<img src="doc/architecture.png" width="1600"/>
 
 
