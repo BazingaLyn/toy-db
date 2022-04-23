@@ -10,8 +10,17 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import org.elastic.toy.db.config.RedisConfig;
 import org.elastic.toy.db.resp.RespInitializerHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+
+/**
+ * @author bazinga
+ * 2022-4-23 09:38:27
+ */
 public class RedisServer {
+
+    protected static final Logger log = LoggerFactory.getLogger(RedisServer.class);
 
 
     private static final int BUFFER_SIZE = 1024 * 1024;
