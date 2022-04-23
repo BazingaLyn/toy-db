@@ -2,5 +2,5 @@
 
 ##Architecture diagram
 
-![](.\doc\Architecture diagram v1.0.png)
+![](doc\Architecture diagram v1.0.png)
 
