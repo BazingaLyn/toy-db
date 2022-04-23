@@ -12,12 +12,21 @@ import java.util.List;
 public class RedisRequest implements Serializable {
 
 
+    /**
+     * redis的命令 例如get hgetall zrange lpush等
+     */
     private String command;
 
 
+    /**
+     * redis后续带的参数
+     */
     private List<String> params;
 
 
+    /**
+     * redis的数据结构
+     */
     private RedisCommandEnums redisCommandEnums;
 
     public String getCommand() {

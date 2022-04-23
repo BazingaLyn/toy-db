@@ -4,6 +4,7 @@ import io.netty.util.Recycler;
 
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 /**
  * @author bazinga
@@ -18,6 +19,15 @@ public class RedisSerializer {
         }
     };
 
+    private static final byte ARRAY = '*';
+    private static final byte ERROR = '-';
+    private static final byte INTEGER = ':';
+    private static final byte SIMPLE_STRING = '+';
+    private static final byte BULK_STRING = '$';
+
+    private static final byte[] DELIMITER = new byte[]{'\r', '\n'};
+
+
     public static byte[] encode(RedisResp redisResp) throws Exception {
         try (ByteBufferBuilder builder = RECYCLER.get()) {
             encode(builder, redisResp);
@@ -27,8 +37,49 @@ public class RedisSerializer {
 
 
     private static void encode(ByteBufferBuilder builder, RedisResp redisResp) {
-//        switch (redisResp.get)
-
+        switch (redisResp.getType()) {
+            case SIMPLE_STRING:
+                String status = (String) redisResp.getO();
+                builder.append(SIMPLE_STRING).append(status).append(DELIMITER);
+                break;
+            case STRING:
+                Object msgInfo = redisResp.getO();
+                if (null == msgInfo) {
+                    builder.append(BULK_STRING).append(-1);
+                } else {
+                    String msgStr = (String) msgInfo;
+                    builder.append(BULK_STRING).append(msgStr.length()).append(DELIMITER)
+                            .append(msgStr);
+                }
+                builder.append(DELIMITER);
+                break;
+            case ARRAY:
+                List<String> arrays = (List<String>) redisResp.getO();
+                if (arrays != null) {
+                    builder.append(ARRAY).append(arrays.size()).append(DELIMITER);
+                    for (String eachLine : arrays) {
+                        if (null == eachLine) {
+                            builder.append(BULK_STRING).append(-1);
+                        } else {
+                            builder.append(BULK_STRING).append(eachLine.length()).append(DELIMITER).append(eachLine);
+                        }
+                        builder.append(DELIMITER);
+                    }
+                } else {
+                    builder.append(ARRAY).append(0).append(DELIMITER);
+                }
+                break;
+            case INTEGER:
+                Integer count = (Integer) redisResp.getO();
+                builder.append(INTEGER).append(count).append(DELIMITER);
+                break;
+            case ERROR:
+                String error = (String) redisResp.getO();
+                builder.append(ERROR).append(error).append(DELIMITER);
+                break;
+            case UNKNOWN:
+                throw new IllegalArgumentException(redisResp.toString());
+        }
     }
 
 

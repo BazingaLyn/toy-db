@@ -1,5 +1,7 @@
 package org.elastic.toy.db.config;
 
+import org.elastic.toy.db.core.RedisNodeExecutor;
+
 /**
  * @author bazinga
  * 2022-4-10 09:36:00
@@ -18,6 +20,9 @@ public class RedisConfig implements Config {
     private int port;
 
 
+    private RedisNodeExecutor redisNodeExecutor;
+
+
     public String getHost() {
         return host;
     }
@@ -32,5 +37,13 @@ public class RedisConfig implements Config {
 
     public void setPort(int port) {
         this.port = port;
+    }
+
+    public RedisNodeExecutor getRedisNodeExecutor() {
+        return redisNodeExecutor;
+    }
+
+    public void setRedisNodeExecutor(RedisNodeExecutor redisNodeExecutor) {
+        this.redisNodeExecutor = redisNodeExecutor;
     }
 }
